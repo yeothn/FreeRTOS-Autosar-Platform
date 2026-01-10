@@ -47,6 +47,15 @@ The application code and OS abstraction layer developed in this repository are r
     * Licensed under the **BSD-3-Clause**.
 
 
+## ⚠️ Scope & Limitations (RTE Implementation)
+
+This project focuses on the **internal mechanisms** of the AUTOSAR Basic Software (BSW) and Operating System (OS).
+Unlike commercial AUTOSAR workflows that rely on code generation tools for the Runtime Environment (RTE), this project adopts a **"Static / Manual RTE"** approach.
+
+* **Out of Scope:** Automatic RTE generation from ARXML, SWC Description parsing.
+* **Implemented:** Manually coded RTE APIs (`Rte_<Swc>.h`, `Rte_<Swc>.c`) to simulate the standard Virtual Function Bus (VFB) behavior.
+
+
 ## 🛠️ Development Environment & Dependencies
 
 This project relies on the following third-party software components.
