@@ -31,9 +31,9 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>Middlewares</name>
+			<name>Middleware</name>
 			<type>2</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Middlewares</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/Middleware</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>
