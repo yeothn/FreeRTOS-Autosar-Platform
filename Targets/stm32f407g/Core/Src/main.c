@@ -1,5 +1,10 @@
 #include "main.h"
 
+#include <stdio.h>
+#include "FreeRTOS.h"
+#include "task.h"
+#include "task_led.h"
+
 RTC_HandleTypeDef hrtc;
 UART_HandleTypeDef huart2;
 #define DWT_CTRL (*(volatile uint32_t*) 0xE0001000)
@@ -27,6 +32,10 @@ int main(void)
 	// SEGGER_UART_init(460800); // set Baudrate
 	// SEGGER_SYSVIEW_Conf();
 	// SEGGER_SYSVIEW_Start();
+
+	// Initialize & Start the FreeRTOS Task
+	Init_App_Task();
+	vTaskStartScheduler();
 
 	while (1) {
 
