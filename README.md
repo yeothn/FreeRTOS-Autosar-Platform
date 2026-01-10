@@ -1,7 +1,6 @@
 # FreeRTOS-Autosar-Platform
 
 **A lightweight, hardware-independent AUTOSAR software platform based on FreeRTOS.**
-**This project aims to provide an AUTOSAR-like Layered Architecture on top of open-source RTOS, enabling standardized application development.**
 ---
 
 ## 📖 Description
