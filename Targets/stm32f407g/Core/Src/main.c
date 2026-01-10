@@ -1,8 +1,10 @@
 #include "main.h"
 
 #include <stdio.h>
+
 #include "FreeRTOS.h"
 #include "task.h"
+
 #include "task_led.h"
 
 RTC_HandleTypeDef hrtc;
@@ -32,10 +34,6 @@ int main(void)
 	// SEGGER_UART_init(460800); // set Baudrate
 	// SEGGER_SYSVIEW_Conf();
 	// SEGGER_SYSVIEW_Start();
-
-	// Initialize & Start the FreeRTOS Task
-	Init_App_Task();
-	vTaskStartScheduler();
 
 	while (1) {
 
