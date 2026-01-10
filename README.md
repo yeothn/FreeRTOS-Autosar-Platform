@@ -1,7 +1,7 @@
 # FreeRTOS-Autosar-Platform
 
-**A lightweight AUTOSAR software platform based on FreeRTOS for STM32F767ZI.**
-
+**A lightweight, hardware-independent AUTOSAR software platform based on FreeRTOS.**
+**This project aims to provide an AUTOSAR-like Layered Architecture on top of open-source RTOS, enabling standardized application development.**
 ---
 
 ## 📖 Description
@@ -21,28 +21,93 @@ graph TD
     RTE -->|Service Call| BSW[Basic Software]
     RTE -->|OS Call| OS_Wrapper
     OS_Wrapper --> FreeRTOS
-    FreeRTOS --> Hardware[("STM32F767ZI")]
+    FreeRTOS --> Hardware[("Target Board")]
 ```
 
-## 🚀 Roadmap
-[x] Phase 1: Environment Setup
 
-* Porting FreeRTOS to STM32F767ZI and establishing a multi-target directory structure.
+## ⚖️ License & Credits
 
-[ ] Phase 2: OS Abstraction Layer
+This project includes third-party software components.
 
-* Wrapping FreeRTOS to implement OSEK APIs (e.g., ActivateTask, SetEvent).
+### 1. Project Source Code
+The application code and OS abstraction layer developed in this repository are released under the **MIT License**.
 
-[ ] Phase 3: RTE Core Implementation
+### 2. Third-Party Components
+* **FreeRTOS Kernel**:
+    * Copyright (C) Amazon.com, Inc. or its affiliates.
+    * Licensed under the **MIT License**.
+    * [Official Website](https://www.freertos.org/)
 
-* Implementing Sender-Receiver (Queue) and Client-Server (Blocking) communication patterns.
+* **SEGGER SystemView & RTT Target Sources**:
+    * Copyright (C) SEGGER Microcontroller GmbH.
+    * Used for educational/non-commercial purpose.
+    * [Official Website](https://www.segger.com/products/development-tools/systemview/)
 
-* Ensuring data consistency using Implicit Communication (Shadow Buffers).
+* **STM32 HAL Driver**:
+    * Copyright (C) STMicroelectronics.
+    * Licensed under the **BSD-3-Clause**.
 
-[ ] Phase 4: BSW Simulation (Stubbing)
 
-* Implementing virtual CAN interrupts using Software Timers and basic PduR/Com stack.
+## 🛠️ Development Environment & Dependencies
 
-[ ] Phase 5: Functional Safety Base
+This project relies on the following third-party software components.
+To reproduce the build environment, please ensure the specified versions are used.
 
-* Implementing E2E (End-to-End) data protection mechanisms and memory protection.
+### 0. Development Tools (IDE & Compiler)
+| Software | Version | Note |
+| :--- | :--- | :--- |
+| **STM32CubeIDE** | **2.0.0** | GCC-based Toolchain |
+| **STM32CubeMX** | **6.12.0** | GUI Tool for Peripheral settings |
+
+### 1. Real-Time Operating System (RTOS)
+| Component | Version | License | Source Link |
+| :--- | :--- | :--- | :--- |
+| **FreeRTOS Kernel** | **202406.04 LTS** | MIT | [FreeRTOS-LTS](https://github.com/FreeRTOS/FreeRTOS-LTS) |
+
+### 2. Debugging & Tracing Tools
+Used for system visualization and real-time tracing.
+
+| Component | Source / Version | Note |
+| :--- | :--- | :--- |
+| **SEGGER SystemView** | [GitHub (`a17c54e`)](https://github.com/SEGGERMicro/SystemView/tree/a17c54e) | Target Sources |
+| **SEGGER RTT** | [GitHub (`ad6970d`)](https://github.com/SEGGERMicro/RTT/tree/ad6970d) | Real-Time Transfer |
+
+> **Version Note:**
+> Since these repositories do not use standard semantic versioning tags, specific **Commit Hashes** are used to ensure build reproducibility.
+
+
+## 🎯 Reference Implementations (Supported Targets)
+
+This platform architecture is designed to be portable. The repository currently supports the following hardware targets:
+
+| Board Name | MCU | Core |
+| :--- | :--- | :--- |
+| **STM32F407G-DISC1** | STM32F407VGT6 | Cortex-M4 |
+| **NUCLEO-F767ZI** | STM32F767ZI | Cortex-M7 |
+
+> **Portability Note:**
+> The core logic in `Source/` is shared across targets. Switching the target only requires changing the `Targets/` directory and HAL configuration.
+
+
+## 🚀 Development Roadmap
+- [x] Phase 1: Environment Setup
+
+    Porting FreeRTOS to STM32F767ZI and establishing a multi-target directory structure.
+
+- [ ] Phase 2: OS Abstraction Layer
+
+    Wrapping FreeRTOS to implement OSEK APIs (e.g., ActivateTask, SetEvent).
+
+- [ ] Phase 3: RTE Core Implementation
+
+    Implementing Sender-Receiver (Queue) and Client-Server (Blocking) communication patterns.
+    
+    Ensuring data consistency using Implicit Communication (Shadow Buffers).
+
+- [ ] Phase 4: BSW Simulation (Stubbing)
+    
+    Implementing virtual CAN interrupts using Software Timers and basic PduR/Com stack.
+
+- [ ] Phase 5: Functional Safety Base
+
+    Implementing E2E (End-to-End) data protection mechanisms and memory protection.
