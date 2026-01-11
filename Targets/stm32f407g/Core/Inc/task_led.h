@@ -9,9 +9,8 @@
 #define INC_TASK_LED_H_
 
 #include "main.h"
-#include "FreeRTOS.h"
-#include "task.h"
 
-extern void Init_App_Task(void);
+void Task_Init_Func(void);
+void Task_100ms_Func(void);
 
 #endif /* INC_TASK_LED_H_ */

@@ -17,7 +17,8 @@ typedef enum {
 	E_OS_RESOURCE,
 	E_OS_CALLLEVEL,
 	E_OS_NOFUNC,
-	E_OS_VALUE
+	E_OS_VALUE,
+	E_OS_ACCESS
 } StatusType;
 
 /* AppMode for StartOS */
@@ -36,6 +37,7 @@ typedef struct { // TaskConfig structure
 	uint16_t		StackSize;
 	void*			StackBuffer;
 	void* 			TaskBuffer;
+	uint8_t			AutoStart;
 } Os_TaskConfigType;
 
 /* Event Type */
@@ -54,5 +56,8 @@ typedef struct { // AlarmConfig structure
 	TaskType 			TaskID;
 	EventMaskType 		EventMask;
 } Os_AlarmConfigType;
+
+/* Resource Type */
+typedef uint32_t ResourceType;
 
 #endif /* OS_TYPES_H */

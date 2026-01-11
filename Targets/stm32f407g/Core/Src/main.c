@@ -2,8 +2,7 @@
 
 #include <stdio.h>
 
-#include "FreeRTOS.h"
-#include "task.h"
+#include "Os.h"
 
 #include "task_led.h"
 
@@ -34,6 +33,8 @@ int main(void)
 	// SEGGER_UART_init(460800); // set Baudrate
 	// SEGGER_SYSVIEW_Conf();
 	// SEGGER_SYSVIEW_Start();
+
+	StartOS(OSDEFAULTAPPMODE);
 
 	while (1) {
 

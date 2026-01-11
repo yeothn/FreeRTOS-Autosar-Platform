@@ -17,7 +17,7 @@
 
 ## 4. Kernel Control
 - [x] **StartOS**: Initialize internal kernel data structures (task creation) and start the scheduler.
-- [ ] **ShutdownOS**: Abort the system execution safely in case of fatal errors.
+- [x] **ShutdownOS**: Abort the system execution safely in case of fatal errors.
 
 ## 5. Alarm & Counter Management
 - [x] **SetRelAlarm**: Trigger an alarm after a relative tick count.
@@ -26,10 +26,10 @@
 - [x] **GetAlarm**: Retrieve the number of ticks remaining until the next alarm expiration.
 
 ## 6. Resource Management
-- [ ] **GetResource**: Enter a critical section or acquire a mutex for a shared resource.
-- [ ] **ReleaseResource**: Exit a critical section or release a mutex.
+- [x] **GetResource**: Enter a critical section or acquire a mutex for a shared resource.
+- [x] **ReleaseResource**: Exit a critical section or release a mutex.
 
 ## 7. System Hooks 
-- [ ] **ErrorHook**: Callback function invoked when an API returns an error status.
-- [ ] **StartupHook**: Callback function invoked by `StartOS` before the scheduler starts.
-- [ ] **ShutdownHook**: Callback function invoked by `ShutdownOS`.
+- [x] **ErrorHook**: Callback function invoked when an API returns an error status.
+- [x] **StartupHook**: Callback function invoked by `StartOS` before the scheduler starts.
+- [x] **ShutdownHook**: Callback function invoked by `ShutdownOS`.

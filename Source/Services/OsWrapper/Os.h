@@ -11,6 +11,7 @@
 
 /* Kernel control APIs */
 void StartOS(AppModeType Mode);
+void ShutdownOS(StatusType Error);
 
 /* Task control APIs */
 StatusType ActivateTask(TaskType TaskID);
@@ -31,6 +32,14 @@ StatusType GetAlarm(Os_AlarmType AlarmID, TickType *TickRef);
 StatusType CancelAlarm(Os_AlarmType AlarmID);
 
 /* Resource control APIs */
+StatusType GetResource(ResourceType ResID);
+StatusType ReleaseResource(ResourceType ResID);
+void SuspendOSInterrupts(void);
+void ResumeOSInterrupts(void);
 
+/* Hook function APIs */
+void StartupHook(void);
+void ShutdownHook(StatusType Error);
+void ErrorHook(StatusType Error);
 
 #endif /* OS_H */

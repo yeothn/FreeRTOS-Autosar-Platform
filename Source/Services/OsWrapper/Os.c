@@ -3,6 +3,10 @@
 
 #include "FreeRTOS.h"
 #include "task.h"
+#include "semphr.h"
+#include "event_groups.h"
+
+#include "main.h"
 
 /* ==========================================
  * AUTOSAR OS Standard APIs
@@ -23,11 +27,18 @@ static Os_TimerBufferType Os_AlarmBuffers[OS_ALARM_COUNT];
 static TickType Os_AlarmCycle[OS_ALARM_COUNT];
 extern const Os_AlarmConfigType Os_AlarmConfig[OS_ALARM_COUNT];
 
+static Os_ResourceHandleType Os_ResourceHandles[OS_RESOURCE_COUNT];
+static Os_ResourceBufferType Os_ResourceBuffers[OS_RESOURCE_COUNT];
+
+static Os_EventHandleType Os_TaskEvent[OS_TASK_COUNT];
+static Os_EventBufferType Os_EventBuffers[OS_TASK_COUNT];
+
+
 /* Initialize and Task creation */
 static void Os_KernelInit(void) {
 	for (int i = 0; i < OS_TASK_COUNT; i++) {
 		Os_TaskHandles[i] = xTaskCreateStatic(
-				Os_TaskConfig[i].TaskFunc,	// Function handle
+				(Os_TaskFunctionHandleType)Os_TaskConfig[i].TaskFunc,	// Function handle
 				Os_TaskConfig[i].TaskName, 	// Task Name
 				Os_TaskConfig[i].StackSize, // Task Stack Size
 				NULL, 						// Parameter
@@ -37,8 +48,11 @@ static void Os_KernelInit(void) {
 				);
 		configASSERT(Os_TaskHandles[i]);
 
-		/* Tasks except Init-Task must be explicitly activated */
-		if (Os_TaskConfig[i].TaskID != TASK_ID_INIT) {
+		/* Create EventGroups for each Task */
+		Os_TaskEvent[i] = xEventGroupCreateStatic(&Os_EventBuffers[i]);
+
+		/* Suspend Task if AutoStart is not set */
+		if (Os_TaskConfig[i].AutoStart == 0) {
 			vTaskSuspend(Os_TaskHandles[i]);
 		}
 	}
@@ -77,15 +91,32 @@ static void Os_AlarmCallback(Os_TimerHandleType xTimer) {
  * =============================== */
 
 void StartOS(AppModeType Mode) {
-	(void)Mode; // Not used
+	(void)Mode; // Not implemented yet
+
+	/* Calling StartupHook */
+	StartupHook();
 
 	/* Task creation */
 	Os_KernelInit();
 
 	/* Start Tasks */
 	vTaskStartScheduler();
+
+	while(1) {
+		/* Error */
+	}
 }
 
+void ShutdownOS(StatusType Error) {
+	/* Calling ShutdownHook */
+	ShutdownHook(Error);
+
+	/* Disable interrupt */
+	portDISABLE_INTERRUPTS();
+
+	/* Block the system until reset */
+	while(1);
+}
 
 /* ===============================
  * Task Management Standard APIs
@@ -145,40 +176,42 @@ StatusType SetEvent(TaskType TaskID, EventMaskType Mask) {
 	if (TaskID >= OS_TASK_COUNT) {
 		return E_OS_ID;
 	}
-
 	if (Os_Port_IsISR() == pdTRUE) { // Interrupt call
 		BaseType_t xHigherPriorityTaskWoken = pdFALSE;
-		xTaskNotifyFromISR(Os_TaskHandles[TaskID], Mask, eSetBits, &xHigherPriorityTaskWoken);
+		if(xEventGroupSetBitsFromISR(Os_TaskEvent[TaskID], Mask, &xHigherPriorityTaskWoken) != pdPASS) {
+			return E_OS_LIMIT;
+		}
 		portYIELD_FROM_ISR(xHigherPriorityTaskWoken); // demand context-switching
 	} else { // Normal call
-		xTaskNotify(Os_TaskHandles[TaskID], Mask, eSetBits);
+		xEventGroupSetBits(Os_TaskEvent[TaskID], Mask);
 	}
 	return E_OS_OK;
 }
 
 StatusType WaitEvent(EventMaskType Mask) {
-	EventMaskType currentEvents;
-
-	/* wait until the desired event arrives */
-	while (1) {
-		/* Check the current event state */
-		xTaskNotifyWait(0, 0, &currentEvents, 0);
-
-		/* compare the event(=Mask) */
-		if ((currentEvents & Mask) != 0) {
-			return E_OS_OK;
-		}
-
-		/* Block until SetEvent with the desired event */
-		xTaskNotifyWait(0, 0, &currentEvents, portMAX_DELAY);
+	TaskType CurrentTaskID;
+	if (GetTaskID(&CurrentTaskID) != E_OS_OK) {
+		return E_OS_ID;
 	}
+
+	xEventGroupWaitBits(
+			Os_TaskEvent[CurrentTaskID],
+			Mask,
+			pdFALSE,
+			pdFALSE,
+			portMAX_DELAY);
+
+	return E_OS_OK;
 }
 
 StatusType ClearEvent(EventMaskType Mask) {
-	EventMaskType currentEvents; // dummy
+	TaskType CurrentTaskID;
+	if (GetTaskID(&CurrentTaskID) != E_OS_OK) {
+		return E_OS_ID;
+	}
 
 	/* Clear the bit of Event (Mask) */
-	xTaskNotifyWait(0, Mask, &currentEvents, 0);
+	xEventGroupClearBits(Os_TaskEvent[CurrentTaskID], Mask);
 
 	return E_OS_OK;
 }
@@ -189,10 +222,7 @@ StatusType GetEvent(TaskType TaskID, EventMaskType *Event) {
 	}
 
 	/* clear no bit to return the current value */
-	uint32_t currentValue;
-	currentValue = ulTaskNotifyValueClear(Os_TaskHandles[TaskID], 0);
-
-	*Event = (EventMaskType)currentValue;
+	*Event = xEventGroupGetBits(Os_TaskEvent[TaskID]);
 
 	return E_OS_OK;
 }
@@ -341,5 +371,108 @@ StatusType CancelAlarm(Os_AlarmType AlarmID) {
 	Os_AlarmCycle[AlarmID] = 0;
 
 	return E_OS_OK;
+}
+
+
+/* =================================
+ * Resource Management Standard APIs
+ * ================================= */
+
+StatusType GetResource(ResourceType ResID) {
+	/* Interrupt is not allowed to take Resource */
+	if (Os_Port_IsISR() == pdTRUE) {
+		return E_OS_CALLLEVEL;
+	}
+
+	if (ResID >= OS_RESOURCE_COUNT) {
+		return E_OS_ID;
+	}
+
+	/* Create a Mutex if isn't created yet */
+	if (Os_ResourceHandles[ResID] == NULL) {
+		Os_ResourceHandles[ResID] = xSemaphoreCreateMutexStatic(
+				&Os_ResourceBuffers[ResID]);
+	}
+
+	/* Wait forever until take Mutex */
+	if (xSemaphoreTake(Os_ResourceHandles[ResID], portMAX_DELAY) != pdPASS) {
+		return E_OS_ACCESS;
+	}
+
+	return E_OS_OK;
+}
+
+StatusType ReleaseResource(ResourceType ResID) {
+	/* Interrupt is not allowed to take Resource */
+	if (Os_Port_IsISR() == pdTRUE) {
+		return E_OS_CALLLEVEL;
+	}
+
+	if (ResID >= OS_RESOURCE_COUNT) {
+		return E_OS_ID;
+	}
+
+	/* Resource has never been taken */
+	if (Os_ResourceHandles[ResID] == NULL) {
+		return E_OS_NOFUNC;
+	}
+
+	/* Release the Mutex */
+	if (xSemaphoreGive(Os_ResourceHandles[ResID]) != pdPASS) {
+		return E_OS_ACCESS;
+	}
+	return E_OS_OK;
+}
+
+void SuspendOSInterrupts(void) {
+	/* enter Critical section - Disable Interrupt */
+	taskENTER_CRITICAL();
+}
+
+void ResumeOSInterrupts(void) {
+	/* exit Critical section - Enable Interrupt */
+	taskEXIT_CRITICAL();
+}
+
+
+/* =================================
+ * Hook function declaration (weak)
+ * ================================= */
+
+__attribute((weak)) void StartupHook(void) {
+
+}
+__attribute((weak)) void ShutdownHook(StatusType Error) {
+	(void)Error;
+}
+__attribute((weak)) void ErrorHook(StatusType Error) {
+	(void)Error;
+}
+
+
+/* =================================
+ * Memory Management for Idle Task
+ * ================================= */
+
+void vApplicationGetIdleTaskMemory(Os_TCBType **ppxIdleTaskTCBBuffer, Os_StackType **ppxIdleTaskStackBuffer,
+                                   uint32_t *pulIdleTaskStackSize)
+{
+    static Os_TCBType xIdleTaskTCB;
+    static Os_StackType uxIdleTaskStack[configMINIMAL_STACK_SIZE];
+
+    *ppxIdleTaskTCBBuffer = &xIdleTaskTCB;
+    *ppxIdleTaskStackBuffer = uxIdleTaskStack;
+    *pulIdleTaskStackSize = configMINIMAL_STACK_SIZE;
+}
+
+void vApplicationGetTimerTaskMemory(Os_TCBType **ppxTimerTaskTCBBuffer, Os_StackType **ppxTimerTaskStackBuffer,
+                                    uint32_t *pulTimerTaskStackSize)
+{
+    static Os_TCBType xTimerTaskTCB;
+    static Os_StackType uxTimerTaskStack[configTIMER_TASK_STACK_DEPTH];
+
+    *ppxTimerTaskTCBBuffer = &xTimerTaskTCB;
+    *ppxTimerTaskStackBuffer = uxTimerTaskStack;
+    *pulTimerTaskStackSize = configTIMER_TASK_STACK_DEPTH;
 }
 

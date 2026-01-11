@@ -13,7 +13,7 @@ typedef enum {
 	TASK_ID_INIT = 0,
 	TASK_ID_100ms,
 	OS_TASK_COUNT
-} Os_TaskType_Enum;
+} Os_TaskID_Enum;
 
 extern const Os_TaskConfigType Os_TaskConfig[OS_TASK_COUNT];
 
@@ -22,8 +22,15 @@ extern const Os_TaskConfigType Os_TaskConfig[OS_TASK_COUNT];
 typedef enum {
 	ALARM_ID_100ms = 0,
 	OS_ALARM_COUNT
-} Os_AlarmType_Enum;
+} Os_AlarmID_Enum;
 
 extern const Os_AlarmConfigType Os_AlarmConfig[OS_ALARM_COUNT];
+
+/* Resoucre ID Definition */
+typedef enum {
+	RESOURCE_SCHEDULER = 0,
+	RESOURCE_CAN_DATA,
+	OS_RESOURCE_COUNT
+} Os_ResourceID_Enum;
 
 #endif /* OS_CFG_H */

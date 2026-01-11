@@ -58,7 +58,6 @@
 #define configUSE_TRACE_FACILITY		1
 #define configUSE_16_BIT_TICKS			0
 #define configIDLE_SHOULD_YIELD			1
-#define configUSE_MUTEXES				1
 #define configQUEUE_REGISTRY_SIZE		8
 #define configCHECK_FOR_STACK_OVERFLOW	0
 #define configUSE_RECURSIVE_MUTEXES		1
@@ -66,10 +65,14 @@
 #define configUSE_APPLICATION_TASK_TAG	0
 #define configUSE_COUNTING_SEMAPHORES	1
 #define configGENERATE_RUN_TIME_STATS	0
+#define configUSE_TICKLESS_IDLE   0
+
+/* Os.c essential settings */
+#define configUSE_MUTEXES				1
 #define configUSE_TASK_NOTIFICATIONS 	1
 #define configSUPPORT_STATIC_ALLOCATION  1
 #define configSUPPORT_DYNAMIC_ALLOCATION 0
-#define configUSE_TICKLESS_IDLE   0
+#define INCLUDE_xTimerPendFunctionCall  1
 
 /* Co-routine definitions. */
 #define configUSE_CO_ROUTINES 		0

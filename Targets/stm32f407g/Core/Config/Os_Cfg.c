@@ -26,7 +26,8 @@ const Os_TaskConfigType Os_TaskConfig[OS_TASK_COUNT] = {
 		/* Allocate Memory */
 		.StackSize = 256,
 		.StackBuffer = Stack_Init,
-		.TaskBuffer = &TCB_Init
+		.TaskBuffer = &TCB_Init,
+		.AutoStart = 1
 	},
 	// [1]: 100ms Task (Lower priority)
 	{
@@ -37,15 +38,16 @@ const Os_TaskConfigType Os_TaskConfig[OS_TASK_COUNT] = {
 		/* Allocate Memory */
 		.StackSize = 128,
 		.StackBuffer = Stack_100ms,
-		.TaskBuffer = &TCB_100ms
+		.TaskBuffer = &TCB_100ms,
+		.AutoStart = 1
 	}
 };
 
 const Os_AlarmConfigType Os_AlarmConfig[OS_ALARM_COUNT] = {
 		{
 			.AlarmID = ALARM_ID_100ms,
-			.Action = ALARM_ACTION_ACTIVATE_TASK,
-			.TaskID = ALARM_ID_100ms,
-			.EventMask = 0 // no event
+			.Action = ALARM_ACTION_SET_EVENT,
+			.TaskID = TASK_ID_100ms,
+			.EventMask = (EventMaskType)0x01
 		}
 };
