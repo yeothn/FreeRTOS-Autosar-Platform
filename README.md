@@ -102,7 +102,7 @@ This platform architecture is designed to be portable. The repository currently 
 
     Porting FreeRTOS to STM32F767ZI and establishing a multi-target directory structure.
 
-- [ ] Phase 2: OS Abstraction Layer
+- [x] Phase 2: OS Abstraction Layer
 
     Wrapping FreeRTOS to implement OSEK APIs (e.g., ActivateTask, SetEvent).
 
@@ -115,7 +115,3 @@ This platform architecture is designed to be portable. The repository currently 
 - [ ] Phase 4: BSW Simulation (Stubbing)
     
     Implementing virtual CAN interrupts using Software Timers and basic PduR/Com stack.
-
-- [ ] Phase 5: Functional Safety Base
-
-    Implementing E2E (End-to-End) data protection mechanisms and memory protection.
