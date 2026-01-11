@@ -10,28 +10,25 @@
 #include "Os_Port.h"
 
 /* Function return type and macros */
-typedef uint8_t StatusType;
-#define E_OS_OK 	((StatusType)0)
-#define E_OS_ID 	((StatusType)1)
-#define E_OS_LIMIT 	((StatusType)2)
-#define E_OS_NOFUNC ((StatusType)3)
-
-/* Task ID */
-typedef uint8_t TaskType;
-typedef TaskType* TaskRefType;
+typedef enum {
+	E_OS_OK,
+	E_OS_ID,
+	E_OS_LIMIT,
+	E_OS_RESOURCE,
+	E_OS_CALLLEVEL,
+	E_OS_NOFUNC,
+	E_OS_VALUE
+} StatusType;
 
 /* AppMode for StartOS */
 typedef uint8_t AppModeType;
 #define OSDEFAULTAPPMODE ((AppModeType)0)
 
-/* Event Type */
-typedef uint32_t EventMaskType;
-
-/* Pointer of the task function: void Func(void) */
-typedef void (*TaskFuncType)(void);
-
-/* TaskConfig structure */
-typedef struct {
+/* Task */
+typedef uint8_t TaskType;
+typedef TaskType* TaskRefType;
+typedef void (*TaskFuncType)(void); // Pointer of the task function: void Func(void)
+typedef struct { // TaskConfig structure
 	TaskType		TaskID;
 	TaskFuncType	TaskFunc;
 	const char* 	TaskName;
@@ -40,5 +37,22 @@ typedef struct {
 	void*			StackBuffer;
 	void* 			TaskBuffer;
 } Os_TaskConfigType;
+
+/* Event Type */
+typedef uint32_t EventMaskType;
+
+/* Alarm Type */
+typedef uint32_t TickType;
+typedef uint32_t Os_AlarmType; // Alarm ID
+typedef enum {
+	ALARM_ACTION_ACTIVATE_TASK,
+	ALARM_ACTION_SET_EVENT
+} Os_AlarmActionType;
+typedef struct { // AlarmConfig structure
+	Os_AlarmType 		AlarmID;
+	Os_AlarmActionType 	Action;
+	TaskType 			TaskID;
+	EventMaskType 		EventMask;
+} Os_AlarmConfigType;
 
 #endif /* OS_TYPES_H */

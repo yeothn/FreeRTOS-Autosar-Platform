@@ -8,6 +8,7 @@
 
 #include "Os_Types.h"
 
+/* Task Set Definition */
 typedef enum {
 	TASK_ID_INIT = 0,
 	TASK_ID_100ms,
@@ -15,5 +16,14 @@ typedef enum {
 } Os_TaskType_Enum;
 
 extern const Os_TaskConfigType Os_TaskConfig[OS_TASK_COUNT];
+
+
+/* Alarm Set Definition */
+typedef enum {
+	ALARM_ID_100ms = 0,
+	OS_ALARM_COUNT
+} Os_AlarmType_Enum;
+
+extern const Os_AlarmConfigType Os_AlarmConfig[OS_ALARM_COUNT];
 
 #endif /* OS_CFG_H */

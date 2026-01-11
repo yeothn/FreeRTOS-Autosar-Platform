@@ -3,6 +3,7 @@
 
 #include "FreeRTOS.h"
 #include "task.h"
+#include "timers.h"
 
 /* ===============================================
  * Project-specific Type definition
@@ -18,6 +19,12 @@ typedef StaticTask_t Os_TCBType;
 
 /* Task Handle Type */
 typedef TaskHandle_t Os_TaskHandleType;
+
+/* Alarm Handle Type */
+typedef TimerHandle_t Os_TimerHandleType;
+
+/* Timer Buffer Type */
+typedef StaticTimer_t Os_TimerBufferType;
 
 
 /* ===============================================

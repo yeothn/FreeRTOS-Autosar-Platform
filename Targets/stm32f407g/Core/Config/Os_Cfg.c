@@ -40,3 +40,12 @@ const Os_TaskConfigType Os_TaskConfig[OS_TASK_COUNT] = {
 		.TaskBuffer = &TCB_100ms
 	}
 };
+
+const Os_AlarmConfigType Os_AlarmConfig[OS_ALARM_COUNT] = {
+		{
+			.AlarmID = ALARM_ID_100ms,
+			.Action = ALARM_ACTION_ACTIVATE_TASK,
+			.TaskID = ALARM_ID_100ms,
+			.EventMask = 0 // no event
+		}
+};
