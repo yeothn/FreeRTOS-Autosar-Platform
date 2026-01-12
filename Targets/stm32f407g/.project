@@ -31,6 +31,11 @@
 	</natures>
 	<linkedResources>
 		<link>
+			<name>Application</name>
+			<type>2</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Application</locationURI>
+		</link>
+		<link>
 			<name>Middleware</name>
 			<type>2</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Middleware</locationURI>
