@@ -5,17 +5,19 @@
 #include "Rte_Swc_Sensor.h"
 
 /* Example */
-void Runnable_ReadAndSendSensor(void) {
-	uint32 currentSpeed;
-	uint8 currentStatus;
+void Runnable_Step_Sensor(void) {
+	static uint32 rawValue = 0;
+	uint32 calculatedSpeed = 0;
 
-	/* Read value from Hardware with BSW function */
-	// currentSpeed = HAL_Get_Speed_Sensor(); // Example
-	// currentStatus = SomeEngineFunc();
-	currentSpeed = 100; // Dummy value
-	currentStatus = 1; // Dummy value
+	/* Create Raw-Value */
+	rawValue += 10;
+	if (rawValue > 50) rawValue = 0; // 0, 10, 20, 30, 40, 50, 0, ...
 
-	/* Send data with RTE_Write */
-	Rte_Write_PP_VehicleSpeed_SpeedVal(currentSpeed);
-	Rte_Write_PP_EngineState_Status(currentStatus);
+	/* [Client] Call the Math Server for Calculation */
+	Rte_Call_RP_Math_Calculate(rawValue, &calculatedSpeed); // Calculate Speed from rawValue
+	// 0, 20, 40, 60, 80, 100, 0, ...
+
+	/* Implicit Send the calculated value to the Display*/
+	//Rte_Write_PP_VehicleSpeed_SpeedVal(calculatedValue); // Explicit
+	Rte_IWrite_PP_VehicleSpeed_SpeedVal(calculatedSpeed); // Implicit
 }

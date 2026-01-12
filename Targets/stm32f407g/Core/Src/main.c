@@ -4,8 +4,6 @@
 
 #include "Os.h"
 
-#include "task_led.h"
-
 RTC_HandleTypeDef hrtc;
 UART_HandleTypeDef huart2;
 #define DWT_CTRL (*(volatile uint32_t*) 0xE0001000)

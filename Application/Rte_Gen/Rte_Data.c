@@ -21,3 +21,6 @@ const Rte_DataHandleType Rte_Hdl_EngineState = {
 	.LockID = RESOURCE_ENGINESTATUS // Defined in Os_Cfg.h
 };
 
+/* Shared-Buffer instance */
+/* volatile because multiple tasks can change the value */
+volatile Rte_Csif_Math_Type Rte_Buffer_MathJob = {0}; // initialize with 0s

@@ -50,13 +50,13 @@
 - [ ] **Rte_Receive (Queued)**: Consume an event/data from a FIFO Queue.
 
 ## 4. Implicit Communication (Data Consistency)
-- [ ] **Buffer Definitions**: Define Global Buffers (Last Known Value) and Task Local Buffers (Shadow).
-- [ ] **Rte_IRead**: Read data from the Task Local Buffer (No OS overhead).
-- [ ] **Rte_IWrite**: Write data to the Task Local Buffer.
-- [ ] **Rte_PreTaskHook (Copy-In)**: Atomic copy from Global Buffer to Local Buffer at Task start.
-- [ ] **Rte_PostTaskHook (Copy-Out)**: Atomic copy from Local Buffer to Global Buffer at Task end.
+- [x] **Buffer Definitions**: Define Global Buffers (Last Known Value) and Task Local Buffers (Shadow).
+- [x] **Rte_IRead**: Read data from the Task Local Buffer (No OS overhead).
+- [x] **Rte_IWrite**: Write data to the Task Local Buffer.
+- [x] **Rte_PreTaskHook (Copy-In)**: Atomic copy from Global Buffer to Local Buffer at Task start.
+- [x] **Rte_PostTaskHook (Copy-Out)**: Atomic copy from Local Buffer to Global Buffer at Task end.
 
 ## 5. Client-Server Communication
 - [ ] **Rte_Call (Intra-Partition)**: Direct function call implementation for server runnables in the same task/core.
-- [ ] **Rte_Call (Inter-Task)**: Blocking call implementation using EventGroups (Wait for Server completion).
-- [ ] **Server_Runnable**: Skeleton code for processing requests and triggering the completion event.
+- [x] **Rte_Call (Inter-Task)**: Blocking call implementation using EventGroups (Wait for Server completion).
+- [x] **Server_Runnable**: Skeleton code for processing requests and triggering the completion event.
