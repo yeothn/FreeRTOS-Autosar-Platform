@@ -1,16 +1,11 @@
-/*
- * task_led.h
- *
- *  Created on: 2026. 1. 10.
- *      Author: yeoth
- */
-
-#ifndef INC_TASK_LED_H_
-#define INC_TASK_LED_H_
+#ifndef TASK_LED_H
+#define TASK_LED_H
 
 #include "main.h"
 
-void Task_Init_Func(void);
-void Task_100ms_Func(void);
+extern void Runnable_Step_Sensor(void);
+extern void Runnable_Step_Display(void);
 
-#endif /* INC_TASK_LED_H_ */
+void Task_500ms(void);
+
+#endif /* TASK_LED_H */

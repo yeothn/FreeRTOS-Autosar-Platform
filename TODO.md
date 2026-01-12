@@ -37,17 +37,15 @@
 # Phase 3: RTE (Runtime Environment) Implementation Status
 
 ## 1. RTE Infrastructure & Static Allocation
-- [ ] **Rte_Type.h**: Define AUTOSAR standard types (`Std_ReturnType`, `uint8`, `Rte_DataHandleType`, etc.).
-- [ ] **Rte_Factory (Queue)**: Implement wrapper for `xQueueCreateStatic` to create communication channels without dynamic allocation.
-- [ ] **Rte_Factory (EventGroup)**: Implement wrapper for `xEventGroupCreateStatic` for Client-Server synchronization.
+- [x] **Rte_Type.h**: Define AUTOSAR standard types (`Std_ReturnType`, `uint8`, `Rte_DataHandleType`, etc.).
 
 ## 2. Lifecycle Management APIs
 - [ ] **Rte_Start**: Initialize RTE internal data structures and communication objects.
 - [ ] **Rte_Stop**: Disable RTE communication and cleanup resources (if needed).
 
 ## 3. Explicit Communication (Sender-Receiver)
-- [ ] **Rte_Write (Unqueued)**: Write data to a global variable or length-1 Queue (Overwrite mode).
-- [ ] **Rte_Read (Unqueued)**: Read the most recent data immediately (Peek/Copy).
+- [x] **Rte_Write (Unqueued)**: Write data to a global variable or length-1 Queue (Overwrite mode).
+- [x] **Rte_Read (Unqueued)**: Read the most recent data immediately (Peek/Copy).
 - [ ] **Rte_Send (Queued)**: Send an event/data to a FIFO Queue.
 - [ ] **Rte_Receive (Queued)**: Consume an event/data from a FIFO Queue.
 
