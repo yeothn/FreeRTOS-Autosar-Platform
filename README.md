@@ -115,3 +115,5 @@ This platform architecture is designed to be portable. The repository currently 
 - [ ] Phase 4: BSW Simulation (Stubbing)
     
     Implementing virtual CAN interrupts using Software Timers and basic PduR/Com stack.
+    
+    Integration Test.

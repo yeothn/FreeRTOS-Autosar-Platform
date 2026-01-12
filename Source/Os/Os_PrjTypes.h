@@ -1,5 +1,5 @@
-#ifndef OS_PORT_H
-#define OS_PORT_H
+#ifndef OS_PRJTYPES_H
+#define OS_PRJTYPES_H
 
 #include "FreeRTOS.h"
 #include "task.h"
@@ -43,10 +43,6 @@ typedef EventGroupHandle_t Os_EventHandleType;
 /* Event Buffer Type */
 typedef StaticEventGroup_t Os_EventBufferType;
 
-/* ===============================================
- * Porting Hardware-specific functions
- * - Located in Core/Port in each Target folder
- * =============================================== */
-extern BaseType_t Os_Port_IsISR(void);
 
-#endif /* OS_PORT_H */
+
+#endif /* OS_PRJTYPES_H */

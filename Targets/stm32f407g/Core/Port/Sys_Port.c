@@ -1,5 +1,3 @@
-#include "Os_Port.h"
-#include "main.h"
 
 /* Hardware specific function for Interrupt-detection
  *
@@ -14,10 +12,12 @@
  * Source/Services/OsWrapper/Os_Port.h */
 
 /* Interrupt detection for ARM Cortex-M */
-BaseType_t Os_Port_IsISR(void) {
+#include "Sys_Port.h"
+
+BaseType_t Sys_Port_IsISR(void) {
     if (__get_IPSR() != 0) {
-        return pdTRUE;
+        return TRUE;
     } else {
-        return pdFALSE;
+        return FALSE;
     }
 }

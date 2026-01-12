@@ -2,6 +2,7 @@
 #define OS_H
 
 #include "Os_Types.h"
+#include "Sys_Port.h"
 
 /* ==========================================
  * AUTOSAR OS Standard APIs
@@ -41,5 +42,11 @@ void ResumeOSInterrupts(void);
 void StartupHook(void);
 void ShutdownHook(StatusType Error);
 void ErrorHook(StatusType Error);
+
+/* ===============================================
+ * Porting Hardware-specific functions
+ * - Located in Core/Port in each Target folder
+ * =============================================== */
+//extern BaseType_t Sys_Port_IsISR(void);
 
 #endif /* OS_H */

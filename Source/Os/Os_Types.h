@@ -2,12 +2,13 @@
 #define OS_TYPES_H
 
 /* ===============================================
- * AUTOSAR Standard Types
+ * AUTOSAR Types
  * - Define Autosar OS types
  * =============================================== */
 
 #include <stdint.h>
-#include "Os_Port.h"
+#include "Std_Types.h"
+#include "Os_PrjTypes.h"
 
 /* Function return type and macros */
 typedef enum {
@@ -22,30 +23,30 @@ typedef enum {
 } StatusType;
 
 /* AppMode for StartOS */
-typedef uint8_t AppModeType;
+typedef uint8 AppModeType;
 #define OSDEFAULTAPPMODE ((AppModeType)0)
 
 /* Task */
-typedef uint8_t TaskType;
+typedef uint8 TaskType;
 typedef TaskType* TaskRefType;
 typedef void (*TaskFuncType)(void); // Pointer of the task function: void Func(void)
 typedef struct { // TaskConfig structure
 	TaskType		TaskID;
 	TaskFuncType	TaskFunc;
 	const char* 	TaskName;
-	uint32_t		Priority;
-	uint16_t		StackSize;
+	uint32			Priority;
+	uint16			StackSize;
 	void*			StackBuffer;
 	void* 			TaskBuffer;
-	uint8_t			AutoStart;
+	uint8			AutoStart;
 } Os_TaskConfigType;
 
 /* Event Type */
-typedef uint32_t EventMaskType;
+typedef uint32 EventMaskType;
 
 /* Alarm Type */
-typedef uint32_t TickType;
-typedef uint32_t Os_AlarmType; // Alarm ID
+typedef uint32 TickType;
+typedef uint32 Os_AlarmType; // Alarm ID
 typedef enum {
 	ALARM_ACTION_ACTIVATE_TASK,
 	ALARM_ACTION_SET_EVENT
@@ -58,6 +59,8 @@ typedef struct { // AlarmConfig structure
 } Os_AlarmConfigType;
 
 /* Resource Type */
-typedef uint32_t ResourceType;
+typedef uint32 ResourceType;
+
+
 
 #endif /* OS_TYPES_H */

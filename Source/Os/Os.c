@@ -176,12 +176,12 @@ StatusType SetEvent(TaskType TaskID, EventMaskType Mask) {
 	if (TaskID >= OS_TASK_COUNT) {
 		return E_OS_ID;
 	}
-	if (Os_Port_IsISR() == pdTRUE) { // Interrupt call
+	if (Sys_Port_IsISR() == TRUE) { // Interrupt call
 		BaseType_t xHigherPriorityTaskWoken = pdFALSE;
 		if(xEventGroupSetBitsFromISR(Os_TaskEvent[TaskID], Mask, &xHigherPriorityTaskWoken) != pdPASS) {
 			return E_OS_LIMIT;
 		}
-		portYIELD_FROM_ISR(xHigherPriorityTaskWoken); // demand context-switching
+		portYIELD_FROM_ISR(xHigherPriorityTaskWoken); // request context-switching
 	} else { // Normal call
 		xEventGroupSetBits(Os_TaskEvent[TaskID], Mask);
 	}
@@ -258,10 +258,10 @@ StatusType SetRelAlarm(Os_AlarmType AlarmID, TickType Increment, TickType Cycle)
 	/* Set Timer period and start */
 	/* check if the function is called by Interrupt */
 	BaseType_t ret;
-	if (Os_Port_IsISR() == pdTRUE) {
+	if (Sys_Port_IsISR() == TRUE) {
 		BaseType_t xHigherPriorityTaskWoken = pdFALSE;
 		ret = xTimerChangePeriodFromISR(Os_AlarmHandles[AlarmID], Increment, &xHigherPriorityTaskWoken);
-		portYIELD_FROM_ISR(xHigherPriorityTaskWoken); // demand context-switching
+		portYIELD_FROM_ISR(xHigherPriorityTaskWoken); // request context-switching
 	} else {
 		ret = xTimerChangePeriod(Os_AlarmHandles[AlarmID], Increment, 0);
 	}
@@ -283,7 +283,7 @@ StatusType SetAbsAlarm(Os_AlarmType AlarmID, TickType Start, TickType Cycle) {
 
 	/* Get the current Tick to calculate Increment */
 	/* check if the function is called by Interrupt */
-	if (Os_Port_IsISR() == pdTRUE) {
+	if (Sys_Port_IsISR() == TRUE) {
 		CurrentTick = xTaskGetTickCountFromISR();
 	} else {
 		CurrentTick = xTaskGetTickCount();
@@ -306,10 +306,10 @@ StatusType SetAbsAlarm(Os_AlarmType AlarmID, TickType Start, TickType Cycle) {
 	/* Set Timer period and start */
 	/* check if the function is called by Interrupt */
 	BaseType_t ret;
-	if (Os_Port_IsISR() == pdTRUE) {
+	if (Sys_Port_IsISR() == TRUE) {
 		BaseType_t xHigherPriorityTaskWoken = pdFALSE;
 		ret = xTimerChangePeriodFromISR(Os_AlarmHandles[AlarmID], Increment, &xHigherPriorityTaskWoken);
-		portYIELD_FROM_ISR(xHigherPriorityTaskWoken); // demand context-switching
+		portYIELD_FROM_ISR(xHigherPriorityTaskWoken); // request context-switching
 	} else {
 		ret = xTimerChangePeriod(Os_AlarmHandles[AlarmID], Increment, 0);
 	}
@@ -335,7 +335,7 @@ StatusType GetAlarm(Os_AlarmType AlarmID, TickType *TickRef) {
 
 	/* Check the timer expire-time and current tick */
 	ExpireTime = xTimerGetExpiryTime(Os_AlarmHandles[AlarmID]);
-	if (Os_Port_IsISR() == pdTRUE) {
+	if (Sys_Port_IsISR() == TRUE) {
 		CurrentTick = xTaskGetTickCountFromISR();
 	} else {
 		CurrentTick = xTaskGetTickCount();
@@ -357,10 +357,10 @@ StatusType CancelAlarm(Os_AlarmType AlarmID) {
 	/* Stop the Timer */
 	/* check if the function is called by Interrupt */
 	BaseType_t ret;
-	if (Os_Port_IsISR() == pdTRUE) {
+	if (Sys_Port_IsISR() == TRUE) {
 		BaseType_t xHigherPriorityTaskWoken = pdFALSE;
 		ret = xTimerStopFromISR(Os_AlarmHandles[AlarmID], &xHigherPriorityTaskWoken);
-		portYIELD_FROM_ISR(xHigherPriorityTaskWoken); // demand context-switching
+		portYIELD_FROM_ISR(xHigherPriorityTaskWoken); // request context-switching
 	} else {
 		ret = xTimerStop(Os_AlarmHandles[AlarmID],0);
 	}
@@ -380,7 +380,7 @@ StatusType CancelAlarm(Os_AlarmType AlarmID) {
 
 StatusType GetResource(ResourceType ResID) {
 	/* Interrupt is not allowed to take Resource */
-	if (Os_Port_IsISR() == pdTRUE) {
+	if (Sys_Port_IsISR() == TRUE) {
 		return E_OS_CALLLEVEL;
 	}
 
@@ -404,7 +404,7 @@ StatusType GetResource(ResourceType ResID) {
 
 StatusType ReleaseResource(ResourceType ResID) {
 	/* Interrupt is not allowed to take Resource */
-	if (Os_Port_IsISR() == pdTRUE) {
+	if (Sys_Port_IsISR() == TRUE) {
 		return E_OS_CALLLEVEL;
 	}
 
