@@ -24,3 +24,15 @@ const Rte_DataHandleType Rte_Hdl_EngineState = {
 /* Shared-Buffer instance */
 /* volatile because multiple tasks can change the value */
 volatile Rte_Csif_Math_Type Rte_Buffer_MathJob = {0}; // initialize with 0s
+
+/* Queue Config Struct for Queued communication */
+static Rte_QCBType Rte_QCB_DTC; // Queue Control Block
+static uint8 Rte_Queue_DTC_Data[5*sizeof(uint32)]; // Storage Area
+Rte_QueueConfigType Rte_Queue_DTC = {
+		.Handle = NULL,
+		.QCBPtr = &Rte_QCB_DTC,
+		.BufferPtr = Rte_Queue_DTC_Data,
+		.Length = 5,
+		.ItemSize = sizeof(uint32)
+};
+

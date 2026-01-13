@@ -5,6 +5,7 @@
 #include "task.h"
 #include "timers.h"
 #include "semphr.h"
+#include "queue.h"
 #include "event_groups.h"
 
 /* ===============================================
@@ -42,7 +43,6 @@ typedef EventGroupHandle_t Os_EventHandleType;
 
 /* Event Buffer Type */
 typedef StaticEventGroup_t Os_EventBufferType;
-
 
 
 #endif /* OS_PRJTYPES_H */

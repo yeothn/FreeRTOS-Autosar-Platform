@@ -46,8 +46,8 @@
 ## 3. Explicit Communication (Sender-Receiver)
 - [x] **Rte_Write (Unqueued)**: Write data to a global variable or length-1 Queue (Overwrite mode).
 - [x] **Rte_Read (Unqueued)**: Read the most recent data immediately (Peek/Copy).
-- [ ] **Rte_Send (Queued)**: Send an event/data to a FIFO Queue.
-- [ ] **Rte_Receive (Queued)**: Consume an event/data from a FIFO Queue.
+- [x] **Rte_Send (Queued)**: Send an event/data to a FIFO Queue.
+- [x] **Rte_Receive (Queued)**: Consume an event/data from a FIFO Queue.
 
 ## 4. Implicit Communication (Data Consistency)
 - [x] **Buffer Definitions**: Define Global Buffers (Last Known Value) and Task Local Buffers (Shadow).

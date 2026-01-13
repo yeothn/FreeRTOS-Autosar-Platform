@@ -106,7 +106,7 @@ This platform architecture is designed to be portable. The repository currently 
 
     Wrapping FreeRTOS to implement OSEK APIs (e.g., ActivateTask, SetEvent).
 
-- [ ] Phase 3: RTE Core Implementation
+- [x] Phase 3: RTE Core Implementation
 
     Implementing Sender-Receiver (Queue) and Client-Server (Blocking) communication patterns.
     

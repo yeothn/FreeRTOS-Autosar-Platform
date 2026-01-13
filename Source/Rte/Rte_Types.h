@@ -31,4 +31,13 @@ typedef struct {
 	ResourceType LockID;	// OS Resource ID for data protection
 } Rte_DataHandleType;
 
+/* Ring Buffer Control struct for Queued Communication */
+typedef struct {
+	Rte_QueueHandleType Handle;
+	Rte_QCBType* QCBPtr;
+	uint8* BufferPtr;
+	uint32 Length;
+	uint32 ItemSize;;
+} Rte_QueueConfigType;
+
 #endif /* RTE_TYPES_H */

@@ -23,6 +23,15 @@ Std_ReturnType Rte_Start(void) {
 	Rte_Buffer_MathJob.input_val = 0;
 	Rte_Buffer_MathJob.result_val = 0;
 
+	/* 3. Initialize Queue defined in Rte_Data for Queued Communictaion */
+	if (Rte_Queue_DTC.Handle == NULL) {
+		Rte_Queue_DTC.Handle = Os_QueueCreate(
+				Rte_Queue_DTC.Length,
+				Rte_Queue_DTC.ItemSize,
+				Rte_Queue_DTC.BufferPtr,
+				Rte_Queue_DTC.QCBPtr);
+	}
+
 	return RTE_E_OK;
 }
 
