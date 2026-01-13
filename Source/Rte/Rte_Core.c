@@ -75,6 +75,7 @@ Std_ReturnType Rte_Internal_Serve_Ack(TaskType clientTaskID, EventMaskType ackEv
 	return RTE_E_OK;
 }
 
+
 /* Start Lifecycle */
 Std_ReturnType Rte_Internal_Start(void) {
 	/* placeholder for Init value, copy logic etc. */

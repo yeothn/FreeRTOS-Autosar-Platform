@@ -11,11 +11,4 @@ void Task_Sensor(void *pvParameters);
 void Task_Display(void *pvParameters);
 void Task_Math(void *pvParameters);
 
-void LED_Toggle1(void);
-void LED_Toggle2(void);
-void LED_Toggle3(void);
-void LED_Toggle4(void);
-void LED_On(void);
-void LED_Off(void);
-
 #endif /* OS_TASK_H */

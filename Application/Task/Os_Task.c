@@ -27,14 +27,12 @@ void Task_Sensor(void *pvParameters) {
 		GetEvent(TASK_ID_SENSOR, &currentEvt);
 
 		if (currentEvt & EVT_WAKEUP) {
-			LED_Toggle2();
 			ClearEvent(EVT_WAKEUP);
 
 			/* Execute Sensor Runnable */
 			Runnable_Step_Sensor();
 			Rte_Runnable_Sensor_End(); // For Implicit Communication: Shadow->Global (copy)
 		}
-
 	}
 }
 
@@ -46,7 +44,6 @@ void Task_Display(void *pvParameters) {
 		GetEvent(TASK_ID_DISPLAY, &currentEvt);
 
 		if (currentEvt & EVT_WAKEUP) {
-			LED_Toggle3();
 			ClearEvent(EVT_WAKEUP);
 
 			/* Execute Display Runnable */
@@ -66,30 +63,4 @@ void Task_Math(void *pvParameters) {
 		/* If activated, call the RTE Dispatcher */
 		Rte_Server_Math_MainFunction();
 	}
-}
-
-/* Example BSW Function for Testing (for Swc_Display.c) */
-/* Actually, this function must be located in Core/Bsw due to the HW-dependancy */
-void LED_Toggle1(void) {
-	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_12);
-}
-
-void LED_Toggle2(void) {
-	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_13);
-}
-
-void LED_Toggle3(void) {
-	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_14);
-}
-
-void LED_Toggle4(void) {
-	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_15);
-}
-
-void LED_On(void) {
-	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12, GPIO_PIN_SET);
-}
-
-void LED_Off(void) {
-	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12, GPIO_PIN_RESET);
 }

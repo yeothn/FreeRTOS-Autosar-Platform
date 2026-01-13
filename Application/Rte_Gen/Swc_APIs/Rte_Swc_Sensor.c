@@ -37,26 +37,16 @@ void Rte_Runnable_Sensor_End(void) {
 }
 
 /* Server-Client Communication */
-/* Client 2 (Client 1: Swc_Display) */
 Std_ReturnType Rte_Call_SwcSensor_RP_Math_Calculate(uint32 input, uint32 *result) {
-	/* Lock to prevent other Client(Display) handles the data(shared buffer) */
-	GetResource(RES_CSIF_MATH);
-
-	/* --- [Critical Section Start] --- */
-
-	/* Arguments -> Shared Buffer */
-	Rte_Buffer_MathJob.input_val = input; // Shared Buffer is defined in Rte_Data
-	Rte_Buffer_MathJob.clientID = TASK_ID_SENSOR;
-
-	/* Blocking Call */
-	/* Task-Display becomes blocked, Task-Server works */
-	Rte_Internal_Call_Blocking(TASK_ID_MATH, RTE_EVT_REQ, RTE_EVT_ACK);
-
-	/* Shared Buffer -> Output */
-	*result = Rte_Buffer_MathJob.result_val;
-
-	/* --- [Critical Section End] --- */
-	ReleaseResource(RES_CSIF_MATH);
-
+	RTE_CALL_BLOCKING_ENGINE(
+			RES_CSIF_MATH, 								// Lock Resource
+			TASK_ID_SENSOR, 							// Client TaskID
+			TASK_ID_MATH, 								// Server TaskID
+			Rte_Buffer_MathJob, 						// Shared Data Buffer
+			RTE_EVT_REQ, 								// Request Event Mask
+			RTE_EVT_ACK, 								// Acknowledge Event Mask
+			{Rte_Buffer_MathJob.input_val = input;}, 	// Input Operation
+			{*result = Rte_Buffer_MathJob.result_val;}	// Output Operation
+		);
 	return RTE_E_OK;
 }

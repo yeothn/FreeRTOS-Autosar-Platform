@@ -1,5 +1,6 @@
 #include "Os.h"
 #include "Os_Cfg.h"
+#include "Rte.h"
 
 #include "FreeRTOS.h"
 #include "task.h"
@@ -98,6 +99,9 @@ void StartOS(AppModeType Mode) {
 
 	/* Task creation */
 	Os_KernelInit();
+
+	/* Initialize RTE */
+	Rte_Start();
 
 	/* Start Tasks */
 	vTaskStartScheduler();

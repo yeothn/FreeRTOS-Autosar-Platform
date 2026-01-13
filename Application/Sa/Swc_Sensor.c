@@ -1,11 +1,13 @@
-/* ===========================
- * SWC Application (Example)
- * ===========================*/
+/* ======================================
+ * Sensor/Actuator SWC - Sensor(Example)
+ * ====================================== */
 
 #include "Rte_Swc_Sensor.h"
 
 /* Example */
 void Runnable_Step_Sensor(void) {
+	Rte_Call_RP_IoHwAb_Toggle_Led(); // for checking
+
 	static uint32 rawValue = 0;
 	uint32 calculatedSpeed = 0;
 

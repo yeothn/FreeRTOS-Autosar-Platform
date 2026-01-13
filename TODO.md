@@ -40,8 +40,8 @@
 - [x] **Rte_Type.h**: Define AUTOSAR standard types (`Std_ReturnType`, `uint8`, `Rte_DataHandleType`, etc.).
 
 ## 2. Lifecycle Management APIs
-- [ ] **Rte_Start**: Initialize RTE internal data structures and communication objects.
-- [ ] **Rte_Stop**: Disable RTE communication and cleanup resources (if needed).
+- [x] **Rte_Start**: Initialize RTE internal data structures and communication objects.
+- [x] **Rte_Stop**: Disable RTE communication and cleanup resources (if needed).
 
 ## 3. Explicit Communication (Sender-Receiver)
 - [x] **Rte_Write (Unqueued)**: Write data to a global variable or length-1 Queue (Overwrite mode).
@@ -57,6 +57,6 @@
 - [x] **Rte_PostTaskHook (Copy-Out)**: Atomic copy from Local Buffer to Global Buffer at Task end.
 
 ## 5. Client-Server Communication
-- [ ] **Rte_Call (Intra-Partition)**: Direct function call implementation for server runnables in the same task/core.
+- [x] **Rte_Call (Intra-Partition)**: Direct function call implementation for server runnables in the same task/core.
 - [x] **Rte_Call (Inter-Task)**: Blocking call implementation using EventGroups (Wait for Server completion).
 - [x] **Server_Runnable**: Skeleton code for processing requests and triggering the completion event.

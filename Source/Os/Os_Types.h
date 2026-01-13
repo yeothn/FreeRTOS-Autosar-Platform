@@ -61,6 +61,7 @@ typedef struct { // AlarmConfig structure
 /* Resource Type */
 typedef uint32 ResourceType;
 
-
+/* Priority Type */
+typedef uint32 TaskPriorityType;
 
 #endif /* OS_TYPES_H */

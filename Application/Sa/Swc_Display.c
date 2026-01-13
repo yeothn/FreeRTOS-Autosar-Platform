@@ -1,6 +1,6 @@
-/* ===========================
- * SWC Application (Example)
- * ===========================*/
+/* =======================================
+ * Sensor/Actuator SWC - Display(Example)
+ * ======================================= */
 
 #include "Rte_Swc_Display.h"
 
@@ -10,6 +10,8 @@ extern void LED_Off(void);
 
 /* Example */
 void Runnable_Step_Display(void) {
+	Rte_Call_RP_IoHwAb_Toggle_Led(); // for checking
+
 	uint32 receivedSpeed = 0;
 	uint32 displayedValue = 0;
 
@@ -22,8 +24,8 @@ void Runnable_Step_Display(void) {
 	// 0, 40, 60, 120, 160, 200, 0, ...
 
 	if (displayedValue > 100) {
-		LED_On();
+		Rte_Call_RP_IoHwAb_Set_Led(1);
 	} else {
-		LED_Off();
+		Rte_Call_RP_IoHwAb_Set_Led(0);
 	}
 }
