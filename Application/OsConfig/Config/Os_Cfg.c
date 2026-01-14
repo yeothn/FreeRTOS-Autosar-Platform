@@ -1,15 +1,10 @@
 #include "Os_Cfg.h"
+#include "Os_Task.h"
 
 /* ==========================================
  * Task Configuration Table
  * - User configuration
  * ========================================== */
-
-extern void Task_Init_Func(void); // example - Init Function
-extern void Task_Sensor(void);
-extern void Task_Display(void);
-extern void Task_Math(void);
-
 
 /* Stack Memory for Tasks */
 static Os_StackType Stack_Init[128];
@@ -23,6 +18,9 @@ static Os_TCBType TCB_Display;
 
 static Os_StackType Stack_Math[128];
 static Os_TCBType TCB_Math;
+
+static Os_StackType Stack_Control[128];
+static Os_TCBType TCB_Control;
 
 const Os_TaskConfigType Os_TaskConfig[OS_TASK_COUNT] = {
 	{
@@ -64,6 +62,16 @@ const Os_TaskConfigType Os_TaskConfig[OS_TASK_COUNT] = {
 		.StackBuffer = Stack_Math,
 		.TaskBuffer = &TCB_Math,
 		.AutoStart = 1
+	},
+	{
+		.TaskID = TASK_ID_CONTROL,
+		.TaskFunc = Task_Control,
+		.TaskName = "Task_Control",
+		.Priority = OS_PRIORITY_HIGH,
+		.StackSize = 128,
+		.StackBuffer = Stack_Control,
+		.TaskBuffer = &TCB_Control,
+		.AutoStart = 1
 	}
 };
 
@@ -72,12 +80,18 @@ const Os_AlarmConfigType Os_AlarmConfig[OS_ALARM_COUNT] = {
 			.AlarmID = ALARM_ID_SENSOR,
 			.Action = ALARM_ACTION_SET_EVENT,
 			.TaskID = TASK_ID_SENSOR,
-			.EventMask = (EventMaskType)0x01
+			.EventMask = EVT_WAKEUP
 		},
 		{
 			.AlarmID = ALARM_ID_DISPLAY,
 			.Action = ALARM_ACTION_SET_EVENT,
 			.TaskID = TASK_ID_DISPLAY,
-			.EventMask = (EventMaskType)0x01
+			.EventMask = EVT_WAKEUP
+		},
+		{
+			.AlarmID = ALARM_ID_CONTROL,
+			.Action = ALARM_ACTION_SET_EVENT,
+			.TaskID = TASK_ID_CONTROL,
+			.EventMask = EVT_WAKEUP
 		}
 };

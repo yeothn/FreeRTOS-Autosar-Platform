@@ -25,6 +25,11 @@ void Bsw_IoHwAb_Set_Led_Blue(uint8 status) {
 	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_15, pinState);
 }
 
+void Bsw_IoHwAb_Get_Button(uint8 *status) {
+	GPIO_PinState pinState = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0);
+	*status = (pinState == GPIO_PIN_SET) ? 1: 0;
+}
+
 void Bsw_IoHwAb_Toggle_Led_Green(void) {
 	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_12);
 }

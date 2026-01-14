@@ -14,16 +14,16 @@ QueueHandle_t Os_QueueCreate(
 	return xQueueCreateStatic(queueLength, itemSize, bufferPtr, QCBPtr);
 }
 
-StatusType Os_QueueSend(QueueHandle_t queue, const void *item) {
+StatusType Os_QueueSend(QueueHandle_t queue, const void *itemPtr) {
 	BaseType_t ret;
 
 	/* check if the function is called by Interrupt */
 	if (Sys_Port_IsISR() == TRUE) { // Interrupt call
 		BaseType_t xHigherPriorityTaskWoken = pdFALSE;
-		ret = xQueueSendFromISR(queue, item, &xHigherPriorityTaskWoken);
+		ret = xQueueSendFromISR(queue, itemPtr, &xHigherPriorityTaskWoken);
 		portYIELD_FROM_ISR(xHigherPriorityTaskWoken); // request context-switching
 	} else {
-		ret = xQueueSend(queue, item, 0);
+		ret = xQueueSend(queue, itemPtr, 0);
 	}
 
 	if (ret != pdTRUE) {

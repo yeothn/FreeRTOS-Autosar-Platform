@@ -14,6 +14,8 @@ void Bsw_IoHwAb_Set_Led_Orange(uint8 status);
 void Bsw_IoHwAb_Set_Led_Red(uint8 status);
 void Bsw_IoHwAb_Set_Led_Blue(uint8 status);
 
+void Bsw_IoHwAb_Get_Button(uint8 *status);
+
 void Bsw_IoHwAb_Toggle_Led_Green(void);
 void Bsw_IoHwAb_Toggle_Led_Orange(void);
 void Bsw_IoHwAb_Toggle_Led_Red(void);

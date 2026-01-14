@@ -50,3 +50,23 @@ Std_ReturnType Rte_Call_SwcSensor_RP_Math_Calculate(uint32 input, uint32 *result
 		);
 	return RTE_E_OK;
 }
+
+/* BSW Intra-Partition Call */
+void Rte_Call_RP_IoHwAb_Get_Button(uint8 *status) {
+	/* Polling Counter */
+
+	static uint32 button_counter = 0;
+
+	uint8 buffer = 0;
+	Bsw_IoHwAb_Get_Button(&buffer);
+	switch (buffer) {
+	case 0:
+		button_counter = 0;
+		break;
+	case 1:
+		button_counter++;
+		break;
+	}
+
+	*status = (button_counter >= 5) ? 1 : 0;
+}

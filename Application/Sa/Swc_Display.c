@@ -10,7 +10,7 @@ extern void LED_Off(void);
 
 /* Example */
 void Runnable_Step_Display(void) {
-	Rte_Call_RP_IoHwAb_Toggle_Led(); // for checking
+	// Rte_Call_RP_IoHwAb_Toggle_Led(); // for checking
 
 	uint32 receivedSpeed = 0;
 	uint32 displayedValue = 0;

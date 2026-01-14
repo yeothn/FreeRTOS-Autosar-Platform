@@ -22,4 +22,18 @@ void Runnable_Step_Sensor(void) {
 	/* Implicit Send the calculated value to the Display*/
 	//Rte_Write_PP_VehicleSpeed_SpeedVal(calculatedValue); // Explicit
 	Rte_IWrite_PP_VehicleSpeed_SpeedVal(calculatedSpeed); // Implicit
+
+	/* Get the Button state, and send the signal by falling edge */
+	uint8 btnState = 0;
+	static uint8 preBtnState = 0; // for Edge detection
+
+	Rte_Call_RP_IoHwAb_Get_Button(&btnState);
+
+	if (btnState == 1 && preBtnState == 0) {
+		uint32 data = 1;
+		void* dtcPayload = &data;
+		Rte_Send_PP_DTC_Code(dtcPayload);
+
+	}
+	preBtnState = btnState;
 }

@@ -4,8 +4,8 @@
 #include "Os_Types.h"
 
 /* ========================
-/* Priority Definitions
-/* ======================== */
+ * Priority Definitions
+ * ======================== */
 #define OS_PRIORITY_IDLE        0
 #define OS_PRIORITY_LOWEST      1
 #define OS_PRIORITY_MEDIUM      2
@@ -22,6 +22,7 @@ typedef enum {
 	TASK_ID_SENSOR,
 	TASK_ID_DISPLAY,
 	TASK_ID_MATH,
+	TASK_ID_CONTROL,
 	OS_TASK_COUNT
 } Os_TaskID_Enum;
 
@@ -35,6 +36,7 @@ extern const Os_TaskConfigType Os_TaskConfig[OS_TASK_COUNT];
 typedef enum {
 	ALARM_ID_SENSOR = 0,
 	ALARM_ID_DISPLAY,
+	ALARM_ID_CONTROL,
 	OS_ALARM_COUNT
 } Os_AlarmID_Enum;
 

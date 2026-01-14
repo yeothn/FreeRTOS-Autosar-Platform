@@ -10,12 +10,14 @@ extern void Rte_Runnable_Display_Start(void);
 /* Runnables */
 extern void Runnable_Step_Sensor(void);
 extern void Runnable_Step_Display(void);
+extern void Runnable_Step_Control(void);
 
 extern void Rte_Server_Math_MainFunction(void);
 
-void Task_Init_Func(void) {
-    SetRelAlarm(ALARM_ID_SENSOR, 500, 500);
-    SetRelAlarm(ALARM_ID_DISPLAY, 1000, 1000);
+void Task_Init_Func(void *pvParameters) {
+    SetRelAlarm(ALARM_ID_SENSOR, 100, 100);
+    SetRelAlarm(ALARM_ID_CONTROL, 500, 500);
+    SetRelAlarm(ALARM_ID_DISPLAY, 500, 500);
     TerminateTask();
 }
 
@@ -62,5 +64,20 @@ void Task_Math(void *pvParameters) {
 
 		/* If activated, call the RTE Dispatcher */
 		Rte_Server_Math_MainFunction();
+	}
+}
+
+void Task_Control(void *pvParameters) {
+	EventMaskType currentEvt;
+
+	while(1) {
+		WaitEvent(EVT_WAKEUP);
+		GetEvent(TASK_ID_CONTROL, &currentEvt);
+		if (currentEvt & EVT_WAKEUP) {
+			ClearEvent(EVT_WAKEUP);
+
+			/* Execute Control Runnable */
+			Runnable_Step_Control();
+		}
 	}
 }
