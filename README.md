@@ -11,18 +11,10 @@ The goal is to design a **Layered Architecture** that decouples the Application 
 
 **Key Implementations:**
 1.  **RTE (Runtime Environment):** Manual implementation of Task communication (Sender-Receiver) and synchronization (Client-Server) mechanisms.
-2.  **OS Abstraction:** Wrapping FreeRTOS APIs to emulate OSEK/AUTOSAR OS standard specifications.
-3.  **BSW Simulation:** Implementation of virtual CAN/DIO drivers (Stub) to verify logic without physical equipment.
+2.  **OS Abstraction:** Wrapping FreeRTOS APIs to emulate AUTOSAR OS standard API specifications.
+3.  **BSW Abstraction:** Implementation of ECU Abstraction such as CAN/DIO drivers using MCU-specific HAL.
 
-```mermaid
-graph TD
-    ASW[Application] -->|Rte_Read/Write| RTE[Runtime Environment]
-    RTE -->|Service Call| BSW[Basic Software]
-    RTE -->|OS Call| OS_Wrapper
-    OS_Wrapper --> FreeRTOS
-    FreeRTOS --> Hardware[("Target Board")]
-```
-
+![ex_screenshot](./Docs/prjStructure.png)
 
 ## ⚖️ License & Credits
 
