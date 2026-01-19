@@ -41,7 +41,7 @@ The application code and OS abstraction layer developed in this repository are r
 
 ## ⚠️ Scope & Limitations (RTE Implementation)
 
-This project focuses on the **internal mechanisms** of the AUTOSAR Basic Software (BSW) and Operating System (OS).
+This project focuses on the **internal mechanisms** of the AUTOSAR Runtime Environment (RTE) and Operating System (OS) for that.
 Unlike commercial AUTOSAR workflows that rely on code generation tools for the Runtime Environment (RTE), this project adopts a **"Static / Manual RTE"** approach.
 
 * **Out of Scope:** Automatic RTE generation from ARXML, SWC Description parsing.
