@@ -5,6 +5,8 @@
 #include "Os.h"
 
 CAN_HandleTypeDef hcan1;
+CAN_HandleTypeDef hcan2;
+
 RTC_HandleTypeDef hrtc;
 UART_HandleTypeDef huart2;
 #define DWT_CTRL (*(volatile uint32_t*) 0xE0001000)
@@ -14,6 +16,7 @@ static void MX_GPIO_Init(void);
 static void MX_USART2_UART_Init(void);
 static void MX_RTC_Init(void);
 static void MX_CAN1_Init(void);
+static void MX_CAN2_Init(void);
 
 int main(void)
 {
@@ -28,7 +31,7 @@ int main(void)
 	MX_USART2_UART_Init();
 	MX_RTC_Init();
 	MX_CAN1_Init();
-
+	MX_CAN2_Init();
 	/* SEGGER SYSVIEW Initialization */
 	// DWT_CTRL |= (1<<0); // Enable the CYCCNT counter for SEGGER SYSVIEW
 	// SEGGER_UART_init(460800); // set Baudrate
@@ -99,6 +102,26 @@ static void MX_CAN1_Init(void)
     Error_Handler();
   }
 
+}
+
+static void MX_CAN2_Init(void)
+{
+  hcan2.Instance = CAN2;
+  hcan2.Init.Prescaler = 5;
+  hcan2.Init.Mode = CAN_MODE_LOOPBACK;
+  hcan2.Init.SyncJumpWidth = CAN_SJW_1TQ;
+  hcan2.Init.TimeSeg1 = CAN_BS1_8TQ;
+  hcan2.Init.TimeSeg2 = CAN_BS2_1TQ;
+  hcan2.Init.TimeTriggeredMode = DISABLE;
+  hcan2.Init.AutoBusOff = DISABLE;
+  hcan2.Init.AutoWakeUp = DISABLE;
+  hcan2.Init.AutoRetransmission = DISABLE;
+  hcan2.Init.ReceiveFifoLocked = DISABLE;
+  hcan2.Init.TransmitFifoPriority = DISABLE;
+  if (HAL_CAN_Init(&hcan2) != HAL_OK)
+  {
+    Error_Handler();
+  }
 }
 
 static void MX_RTC_Init(void)

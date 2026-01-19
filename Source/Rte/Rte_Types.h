@@ -6,7 +6,6 @@
  * - Define Autosar RTE types
  * =============================================== */
 
-#include <stdint.h>
 #include "Std_Types.h"
 #include "Os_Types.h"
 #include "Rte_PrjTypes.h"

@@ -32,6 +32,13 @@ typedef uint8_t Std_ReturnType;
 #define E_OK 		 ((Std_ReturnType)0x00)
 #define E_NOT_OK	 ((Std_ReturnType)0x01)
 
+/* CPU Byte order */
+#define CPU_TYPE_8        8
+#define CPU_TYPE_16       16
+#define CPU_TYPE_32       32
+#define MSB_FIRST         0  /* Big Endian */
+#define LSB_FIRST         1  /* Little Endian */
+
 /* Common Symbols */
 #ifndef TRUE
 	#define TRUE ((boolean)1)

@@ -29,7 +29,7 @@ typedef uint8 AppModeType;
 /* Task */
 typedef uint8 TaskType;
 typedef TaskType* TaskRefType;
-typedef void (*TaskFuncType)(void); // Pointer of the task function: void Func(void)
+typedef void (*TaskFuncType)(void*); // Pointer of the task function: void Func(void)
 typedef struct { // TaskConfig structure
 	TaskType		TaskID;
 	TaskFuncType	TaskFunc;

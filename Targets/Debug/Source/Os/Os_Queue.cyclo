@@ -1,0 +1,3 @@
+D:/yeoth/Projects/Frautos/Source/Os/Os_Queue.c:9:15:Os_QueueCreate	1
+D:/yeoth/Projects/Frautos/Source/Os/Os_Queue.c:17:12:Os_QueueSend	4
+D:/yeoth/Projects/Frautos/Source/Os/Os_Queue.c:34:12:Os_QueueReceive	4

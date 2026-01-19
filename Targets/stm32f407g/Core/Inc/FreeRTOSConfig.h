@@ -68,6 +68,8 @@
 #define configUSE_TICKLESS_IDLE   0
 
 /* Os.c essential settings */
+#define configENABLE_FPU    1
+#define configENABLE_MPU    0
 #define configUSE_MUTEXES				1
 #define configUSE_TASK_NOTIFICATIONS 	1
 #define configSUPPORT_STATIC_ALLOCATION  1

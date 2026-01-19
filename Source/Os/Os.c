@@ -1,6 +1,7 @@
 #include "Os.h"
 #include "Os_Cfg.h"
 #include "Rte.h"
+#include "Bsw_Service.h"
 
 #include "FreeRTOS.h"
 #include "task.h"
@@ -96,6 +97,9 @@ void StartOS(AppModeType Mode) {
 
 	/* Calling StartupHook */
 	StartupHook();
+
+	/* Initialize BSW */
+	Bsw_Initialize();
 
 	/* Task creation */
 	Os_KernelInit();

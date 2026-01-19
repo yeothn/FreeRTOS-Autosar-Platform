@@ -1,0 +1,5 @@
+../Core/Bsw/Bsw_Mcal_Can.c:11:6:Bsw_Mcal_CAN_Init	1
+../Core/Bsw/Bsw_Mcal_Can.c:19:13:Bsw_Mcal_CAN1_Setup	1
+../Core/Bsw/Bsw_Mcal_Can.c:44:13:Bsw_Mcal_CAN2_Setup	1
+../Core/Bsw/Bsw_Mcal_Can.c:71:6:Bsw_Mcal_CAN_Write	3
+../Core/Bsw/Bsw_Mcal_Can.c:95:6:HAL_CAN_RxFifo0MsgPendingCallback	3
