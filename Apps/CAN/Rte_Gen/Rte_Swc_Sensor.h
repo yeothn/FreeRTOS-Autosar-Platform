@@ -13,6 +13,6 @@ void Rte_IWrite_Runnable_Swc_Sensor_Step_P_AccData_vVeh(uint16 u);
 void Rte_Swc_Sensor_CopyOutput(void);
 
 void Rte_Call_RP_IoHwAb_Get_Button(uint8 *status);
-#define Rte_Call_RP_IoHwAb_Set_Led(status) (Bsw_IoHwAb_Set_Led_Orange(status))
+#define Rte_Call_RP_IoHwAb_Set_Led(status) (Bsw_IoHwAb_Set_Led_Green(status))
 
 #endif /* RTE_SWC_SENSOR_H */

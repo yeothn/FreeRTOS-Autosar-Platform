@@ -11,6 +11,11 @@
 
 /* --- CAN Communication --- */
 
+/* Activate CAN */
+#define CAN1_ACTIVE 1
+#define CAN2_ACTIVE 1
+#define CAN3_ACTIVE 0
+
 /* define CAN IDs */
 #define CAN_ID_SENSOR_DATA 		0x100
 #define CAN_ID_DISPLAY_DATA 	0x200

@@ -1,4 +1,5 @@
 #include "main.h"
+#include "Com_Cfg.h"
 #include "Bsw_Com.h"
 #include "Bsw_Mcal_Can.h"
 
@@ -11,9 +12,12 @@ static void Bsw_Mcal_CAN2_Setup(void);
 void Bsw_Mcal_CAN_Init(void) {
 	//MX_CAN1_Init(); // called in main.c
 	//MX_CAN2_Init();
-
-	Bsw_Mcal_CAN1_Setup();
-	Bsw_Mcal_CAN2_Setup();
+	if (CAN1_ACTIVE) {
+		Bsw_Mcal_CAN1_Setup();
+	}
+	if (CAN2_ACTIVE) {
+		Bsw_Mcal_CAN2_Setup();
+	}
 }
 
 static void Bsw_Mcal_CAN1_Setup(void) {

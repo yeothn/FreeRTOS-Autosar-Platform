@@ -32,8 +32,10 @@ int main(void)
 	MX_RTC_Init();
 	MX_CAN1_Init();
 	MX_CAN2_Init();
+
 	/* SEGGER SYSVIEW Initialization */
 	// DWT_CTRL |= (1<<0); // Enable the CYCCNT counter for SEGGER SYSVIEW
+	// HAL_NVIC_SetPriorityGrouping(0);
 	// SEGGER_UART_init(460800); // set Baudrate
 	// SEGGER_SYSVIEW_Conf();
 	// SEGGER_SYSVIEW_Start();

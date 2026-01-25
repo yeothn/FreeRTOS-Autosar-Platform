@@ -1,3 +1,0 @@
-../Core/Bsw/Bsw_Com.c:8:6:Bsw_Com_SendMsg	1
-../Core/Bsw/Bsw_Com.c:15:6:Bsw_Com_RxIndication	4
-../Core/Bsw/Bsw_Com.c:31:6:Bsw_Com_GetRxData	1
