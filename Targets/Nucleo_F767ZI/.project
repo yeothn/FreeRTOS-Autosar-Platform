@@ -33,7 +33,7 @@
 		<link>
 			<name>Application</name>
 			<type>2</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Apps/CAN</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/Demo/CAN</locationURI>
 		</link>
 		<link>
 			<name>Middleware</name>
